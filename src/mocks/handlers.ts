@@ -1,45 +1,48 @@
-import { rest } from 'msw';
-
-const data = { messages: [] as string[] };
+import { rest } from 'msw'
+import todoProvider from '../todo/todo.provider'
 
 export const handlers = [
     rest.get('/test', (req, res, ctx) => {
-      return res(
-        ctx.status(200),
-        ctx.json({
-            messages: data.messages
-        }),
-      );
+        const result = todoProvider.getTodoList()
+        return res(
+            ctx.status(200),
+            ctx.json({
+                messages: result,
+            })
+        )
     }),
-    rest.post('/test', (req, res, ctx) => {
-      const newMessage = `message(${Date.now()})`;
 
-      data.messages.push(newMessage);
-
-      return res(
-        ctx.status(200),
-        ctx.json({
-          messages: newMessage
-        }),
-      );
+    rest.post('/test', async (req, res, ctx) => {
+        const { item } = await req.json()
+        todoProvider.addTodo(item)
+        const result = await todoProvider.getTodoList()
+        return res(
+            ctx.status(200),
+            ctx.json({
+                messages: result,
+            })
+        )
     }),
-    rest.put('/test', (req, res, ctx) => {
-
-      return res(
-        ctx.status(200),
-        ctx.json({
-          messages: 'put!!!'
-        }),
-      );
+    rest.put('/test', async (req, res, ctx) => {
+        const { id } = await req.json()
+        todoProvider.completeTodo(id)
+        const result = await todoProvider.getTodoList()
+        return res(
+            ctx.status(200),
+            ctx.json({
+                messages: result,
+            })
+        )
     }),
-    rest.delete('/test', (req, res, ctx) => {
-      data.messages = [];
-
-      return res(
-        ctx.status(200),
-        ctx.json({
-          messages: 'message deleted'
-        }),
-      );
-    })
-];
+    rest.delete('/test', async (req, res, ctx) => {
+        const { id } = await req.json()
+        todoProvider.removeTodo(id)
+        const result = await todoProvider.getTodoList()
+        return res(
+            ctx.status(200),
+            ctx.json({
+                messages: result,
+            })
+        )
+    }),
+]
