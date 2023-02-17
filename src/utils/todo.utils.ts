@@ -1,10 +1,9 @@
+import { TodoList } from '../redux/todo/todoSlice.type'
+
 export function concatId<S>(idList: S[], id: S) {
     return [...new Set(idList.concat(id))]
 }
-export function concatEntities<T>(
-    baseObject: { [key: string]: T },
-    toConcat: { [key: string]: T }
-) {
+export function concatEntities<T>(baseObject: T, toConcat: T) {
     return Object.assign({}, baseObject, toConcat)
 }
 export function removeEntities<T>(
@@ -13,5 +12,12 @@ export function removeEntities<T>(
 ) {
     const state = { ...baseObejct }
     delete state[id]
+    return state
+}
+export function removeRefId(baseObject: TodoList, arr: string[], item: string) {
+    const state = { ...baseObject }
+    arr.forEach((id: string) =>
+        state[id].connection.filter((refId) => refId !== item)
+    )
     return state
 }

@@ -1,23 +1,19 @@
+import { TodoList } from '../redux/todo/todoSlice.type'
+
 export interface ITodoProvider {
-    addTodo: (item: string) => void
-    getTodoList: () => Promise<{
-        [key: string]: {
-            item: string
-            postedAt: string
-            done: boolean
-            connection: string[]
-        }
-    }>
-    // getTodoList: () => {
-    //     [key: string]: {
-    //         item: string
-    //         postedAt: string
-    //         done: boolean
-    //         connection: string[]
-    //     }
-    // }
-    // addConnection: (item: string, connection: string) => void
-    // removeConnection: (item: string, connection: string) => void
-    completeTodo: (item: string) => void
-    removeTodo: (item: string) => void
+    addTodo: (todoList: TodoList, item: string) => TodoList
+    getTodos: () => TodoList
+    updateItem: (updatedList: TodoList) => void
+    removeTodo: (todoList: TodoList, item: string) => TodoList
+    addConnection: (
+        todoList: TodoList,
+        id: string,
+        refItemId: string
+    ) => TodoList
+    completeTodo: (todoList: TodoList, item: string) => TodoList
+    removeConnection: (
+        todoList: TodoList,
+        id: string,
+        refItemId: string
+    ) => TodoList
 }

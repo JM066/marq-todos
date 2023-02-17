@@ -1,30 +1,27 @@
 import { ITodoProvider } from './todo.interface'
-import { concatEntities, concatId, removeEntities } from '../utils/todo.utils'
 import { v4 as uuidv4 } from 'uuid'
+import _ from 'lodash'
+import {
+    concatEntities,
+    concatId,
+    removeEntities,
+    removeRefId,
+} from '../utils/todo.utils'
 
-type todoListType = {
-    [key: string]: {
-        item: string
-        done: boolean
-        connection: string[]
-    }
-}
+import { TodoList } from '../redux/todo/todoSlice.type'
 
-function getItems() {
-    let existing = localStorage.getItem('todoList')
-    let data = existing ? JSON.parse(existing) : {}
-    console.log('newData', data)
-    return data
-}
-function updateItem(updatedList: todoListType) {
-    localStorage.setItem('todoList', JSON.stringify(updatedList))
-}
+// function getItems() {
+//     let existing = localStorage.getItem('todoList')
+//     let data = existing ? JSON.parse(existing) : {}
+//     return data as TodoList
+// }
+
 function generateUid() {
     return uuidv4()
 }
 
 const todoProvider: ITodoProvider = {
-    addTodo: async (item: string) => {
+    addTodo: (todoList: TodoList, item: string) => {
         const id = generateUid()
         const data = {
             [id]: {
@@ -35,50 +32,74 @@ const todoProvider: ITodoProvider = {
             },
         }
 
-        const todoList = getItems()
-        const state = concatEntities(todoList, data)
-        updateItem(state)
+        // const todoList = getItems()
+        const state = concatEntities<TodoList>(todoList, data)
+        return state
+        // updateItem(state)
     },
 
-    getTodoList: () => {
-        return getItems()
+    getTodos: () => {
+        let existing = localStorage.getItem('todoList')
+        let data = existing ? JSON.parse(existing) : {}
+        return data as TodoList
+        // return getItems()
     },
 
-    // addConnection: (id: string, refItem: string) => {
-    //     concatId(todoList[id].connection, refItem)
+    updateItem(updatedList: TodoList) {
+        localStorage.setItem('todoList', JSON.stringify(updatedList))
+    },
 
-    //     // this.adjacencyList[node1].push(node2)
-    //     // this.adjacencyList[node2].push(node1)
-    // },
-    // removeConnection: (node1, node2) => {
-    //     // this.adjacencyList[node1] = this.adjacencyList[node1].filter(v => v !== node2)
-    //     // this.adjacencyList[node2] = this.adjacencyList[node2].filter(v => v !== node1)
-    // },
-    removeTodo: (item) => {
-        let todoList = getItems()
+    removeTodo: (todoList: TodoList, item: string) => {
+        // let todoList = getItems()
+        const connectedItemList = todoList[item].connection
         const rest = removeEntities(todoList, item)
-        todoList = { ...rest }
-        updateItem(todoList)
+        const state = removeRefId(rest, connectedItemList, item)
+        todoList = { ...state }
+        return todoList
+        // updateItem(todoList)
     },
-    completeTodo(item) {
-        const todoList = getItems()
-        const doneState = todoList[item].connection.filter(
-            (task: string) => !todoList[task].done
+    addConnection: (todoList: TodoList, id: string, refItemId: string) => {
+        // let todoList = getItems()
+        todoList[id].connection = concatId<string>(
+            todoList[id].connection,
+            refItemId
         )
+        todoList[refItemId].connection = concatId<string>(
+            todoList[refItemId].connection,
+            id
+        )
+        return todoList
+    },
+    completeTodo: (todoList: TodoList, item: string) => {
+        // const todoList = getItems()
+        console.error('todoList', todoList)
+        const doneState = todoList[item].connection.filter(
+            (id: string) => !todoList[id].done
+        )
+        console.error('doneState', doneState)
         if (doneState.length > 0) {
-            doneState.forEach((task: todoListType) =>
-                console.log(`please complete todo ${task.item}`)
+            doneState.forEach((id: string) =>
+                console.log(`please complete todo ${todoList[id]}`)
             )
         } else {
-            const state = { ...todoList }
-            state[item].done = true
-            updateItem(state)
+            let clonedTodoList = _.cloneDeep(todoList)
+            clonedTodoList[item].done = true
+
+            return clonedTodoList
         }
-        //     // while (this.adjacencyList[node].length) {
-        //     //   const adjacentNode = this.adjacencyList[node].pop();
-        //     //   this.removeConnection(node, adjacentNode);
-        //     // }
-        //     // delete this.adjacencyList[node];
+
+        return todoList
+    },
+    removeConnection: (todoList: TodoList, id: string, refItemId: string) => {
+        // let todoList = getItems()
+        todoList[id].connection = todoList[id].connection.filter(
+            (item) => item !== refItemId
+        )
+        todoList[id].connection = todoList[refItemId].connection.filter(
+            (item) => item !== id
+        )
+        return todoList
+        // updateItem(todoList)
     },
 }
 export default todoProvider

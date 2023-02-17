@@ -4,7 +4,7 @@ import type { RootState } from '../../redux/store'
 import { getTodoItemById } from '../../redux/todo/todoSlice'
 interface ITodo {
     id: string
-    handleUpdate: (id: string) => void
+    handleComplete: (id: string) => void
     handleDelete: (id: string) => void
 }
 export default function Todo(props: ITodo) {
@@ -26,10 +26,22 @@ export default function Todo(props: ITodo) {
             </div>
             <button
                 className="button-with-margin"
-                onClick={() => props.handleUpdate(props.id)}
+                onClick={() => props.handleComplete(props.id)}
             >
                 Completed
             </button>
+            {/* <button
+                className="button-with-margin"
+                onClick={() => props.handleComplete(props.id)}
+            >
+                Connect
+            </button>
+            <button
+                className="button-with-margin"
+                onClick={() => props.handleDisconnect(props.id)}
+            >
+                Disconnect
+            </button> */}
             <button
                 className="button-with-margin"
                 onClick={() => props.handleDelete(props.id)}

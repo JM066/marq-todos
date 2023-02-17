@@ -18,9 +18,9 @@ export const todoSlice = createSlice({
 
 export const { addItem } = todoSlice.actions
 
-export const getTodolist = (state: RootState) =>
+export const getTodolistKeys = (state: RootState) =>
     Object.keys(state.todo.todoEntities)
 export const getTodoItemById = (state: RootState, id: string) =>
     state.todo.todoEntities[id]
-
+export const getTodoList = (state: RootState) => state.todo.todoEntities
 export default todoSlice.reducer
