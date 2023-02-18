@@ -14,7 +14,6 @@ export default function Edit(props: PropsWithChildren<IEdit>) {
         <div>
             <button onClick={() => setIsOpen(true)}>Edit</button>
             <ModalContainer isOpen={isOpen} closeModal={closeModal}>
-                <div>Edit Task Title</div>
                 <div>Connect Tasks</div>
                 {props.children}
             </ModalContainer>

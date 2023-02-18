@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
+import useUpdateTodo from '../../hook/useUpdateTodo'
 import { TodoList } from '../../redux/todo/todoSlice.type'
 interface ISearch {
     id: string
     list: TodoList
     idList: string[]
-    connect: (id: string, refId: string) => void
+    reload: () => void
 }
 
 export default function Search(props: ISearch) {
@@ -12,6 +13,12 @@ export default function Search(props: ISearch) {
         id: '',
         task: '',
     })
+    const { updateTodo } = useUpdateTodo<TodoList>(
+        'connect',
+        props.list,
+        props.id,
+        search.id
+    )
     const handleSelect = (item: string, id: string) => {
         setSearch({ id: id, task: item })
     }
@@ -20,6 +27,10 @@ export default function Search(props: ISearch) {
             id: '',
             task: e.currentTarget.value.toLocaleLowerCase() || '',
         })
+    }
+    const handleConnect = async () => {
+        await updateTodo()
+        props.reload()
     }
     const handleSearch = () => {
         return (
@@ -55,9 +66,7 @@ export default function Search(props: ISearch) {
                 onChange={(e) => handleInput(e)}
             />
             {search.task !== undefined && handleSearch()}
-            <button onClick={() => props.connect(props.id, search.id)}>
-                {search.id}
-            </button>
+            <button onClick={handleConnect}>{search.id}</button>
         </div>
     )
 }

@@ -11,8 +11,8 @@ export function removeEntities(baseObejct: TodoList, id: string) {
     return baseObejct
 }
 export function removeRefId(baseObject: TodoList, arr: string[], item: string) {
-    arr.forEach((id: string) =>
-        baseObject[id].connection.filter((refId) => refId !== item)
-    )
+    arr.forEach((id: string) => {
+        baseObject[id]?.connection.filter((refId) => refId !== item)
+    })
     return baseObject
 }

@@ -15,21 +15,30 @@ export const handlers = [
 
     rest.post('/test', async (req, res, ctx) => {
         const { list, item } = await req.json()
-        const result = todoProvider.addTodo(list, item)
+        todoProvider.addTodo(list, item)
         return res(
             ctx.status(200),
             ctx.json({
-                data: result,
+                data: 'post',
             })
         )
     }),
     rest.put('/test', async (req, res, ctx) => {
-        const { data } = await req.json()
-        todoProvider.editTodo(data)
+        const { action, list, id, refId } = await req.json()
+        if (action === 'connect') {
+            todoProvider.addConnection(list, id, refId)
+        }
+        if (action === 'complete') {
+            todoProvider.completeTodo(list, id)
+        }
+        if (action === 'disconnect') {
+            todoProvider.removeConnection(list, id, refId)
+        }
+
         return res(
             ctx.status(200),
             ctx.json({
-                messages: 'put',
+                data: 'put',
             })
         )
     }),

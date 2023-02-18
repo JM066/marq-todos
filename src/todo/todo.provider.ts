@@ -16,6 +16,9 @@ import { TodoList } from '../redux/todo/todoSlice.type'
 function generateUid() {
     return uuidv4()
 }
+function updateItem(updatedList: TodoList) {
+    setLocalStorage(LOCAL_STORAGE_KEY.TODOLIST, updatedList)
+}
 
 const todoProvider: ITodoProvider = {
     addTodo: (todoList: TodoList, item: string) => {
@@ -30,7 +33,7 @@ const todoProvider: ITodoProvider = {
         }
 
         const state = concatEntities<TodoList>(todoList, data)
-        setLocalStorage(LOCAL_STORAGE_KEY.TODOLIST, state)
+        updateItem(state)
         return state
     },
 
@@ -40,15 +43,17 @@ const todoProvider: ITodoProvider = {
     },
 
     editTodo: (updatedList: TodoList) => {
-        setLocalStorage(LOCAL_STORAGE_KEY.TODOLIST, updatedList)
+        updateItem(updatedList)
     },
 
     removeTodo: (todoList: TodoList, item: string) => {
         let state = _.cloneDeep(todoList)
         const connectedItemList = state[item].connection
         const rest = removeEntities(state, item)
-        state = removeRefId(rest, connectedItemList, item)
-        setLocalStorage(LOCAL_STORAGE_KEY.TODOLIST, state)
+        if (connectedItemList.length > 0) {
+            state = removeRefId(rest, connectedItemList, item)
+        }
+        updateItem(state)
         return state
     },
     addConnection: (todoList: TodoList, id: string, refItemId: string) => {
@@ -64,19 +69,16 @@ const todoProvider: ITodoProvider = {
                 refItemId
             )
         }
-        setLocalStorage(LOCAL_STORAGE_KEY.TODOLIST, state)
+        updateItem(state)
         return state
     },
     completeTodo: (todoList: TodoList, item: string) => {
         let state = _.cloneDeep(todoList)
-        console.error('length', state[item].connection)
         if (state[item].connection.length > 0) {
-            const doneState = state[item].connection.every((id: string) => {
-                console.log(state[id])
-                return state[id].done
+            const doneState = state[item].connection.filter((id: string) => {
+                return state[id]?.done === false
             })
-            console.error('doneState?', doneState)
-            if (!doneState) {
+            if (doneState.length > 0) {
                 window.alert(`please complete all the referred tasks`)
             } else {
                 state[item].done = true
@@ -84,7 +86,7 @@ const todoProvider: ITodoProvider = {
         } else {
             state[item].done = true
         }
-        setLocalStorage(LOCAL_STORAGE_KEY.TODOLIST, state)
+        updateItem(state)
         return state
     },
     removeConnection: (todoList: TodoList, id: string, refItemId: string) => {
@@ -95,7 +97,7 @@ const todoProvider: ITodoProvider = {
         state[id].connection = state[refItemId].connection.filter(
             (item) => item !== id
         )
-        setLocalStorage(LOCAL_STORAGE_KEY.TODOLIST, state)
+        updateItem(state)
         return state
     },
 }

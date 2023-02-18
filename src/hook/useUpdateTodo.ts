@@ -3,20 +3,28 @@ import callApi from '../utils/http.utils'
 
 type TodoData = {
     loading: boolean
-    addTodo: () => Promise<void>
+    updateTodo: () => Promise<void>
 }
-export default function useAddTodo<T>(list: T, text: string): TodoData {
+export default function useUpdateTodo<T>(
+    action: string,
+    list: T,
+    id: string,
+    refId?: string
+): TodoData {
     const [loading, setLoading] = useState<boolean>(false)
 
-    const addTodo = async () => {
+    const updateTodo = async () => {
+        console.error('fired?')
         setLoading(true)
         try {
             const json = await callApi({
                 url: '/test',
-                method: 'post',
+                method: 'put',
                 body: JSON.stringify({
+                    action: action,
                     list: list,
-                    item: text,
+                    id: id,
+                    refId: refId,
                 }),
             })
             if (json.data) setLoading(false)
@@ -25,5 +33,5 @@ export default function useAddTodo<T>(list: T, text: string): TodoData {
         }
     }
 
-    return { loading, addTodo }
+    return { loading, updateTodo }
 }
