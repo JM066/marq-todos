@@ -74,3 +74,7 @@
     border-radius: 20px;
     border: 4px dashed mediumpurple;
 }
+.list {
+    display: flex;
+    flex-direction: row;
+}

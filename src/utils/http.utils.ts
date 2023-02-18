@@ -1,4 +1,4 @@
-export default async function Http<T>({
+export default async function Http({
     url,
     method,
     body,
@@ -12,5 +12,5 @@ export default async function Http<T>({
     if (!res.ok) {
         throw new Error(res.statusText)
     }
-    return json as T
+    return json
 }

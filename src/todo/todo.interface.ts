@@ -3,7 +3,7 @@ import { TodoList } from '../redux/todo/todoSlice.type'
 export interface ITodoProvider {
     addTodo: (todoList: TodoList, item: string) => TodoList
     getTodos: () => TodoList
-    updateItem: (updatedList: TodoList) => void
+    editTodo: (updatedList: TodoList) => void
     removeTodo: (todoList: TodoList, item: string) => TodoList
     addConnection: (
         todoList: TodoList,

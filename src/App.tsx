@@ -1,49 +1,60 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItem, getTodolistKeys, getTodoList } from './redux/todo/todoSlice'
-import Todo from './component/Todo/index'
-import './App.css'
-import { RootState } from './redux/store'
-import callApi from './http/index'
+import Task from './component/Task/index'
+import Edit from './component/Edit/index'
+import Search from './component/Search/index'
+import callApi from './utils/http.utils'
 import todoProvider from './todo/todo.provider'
-import { TodoList } from './redux/todo/todoSlice.type'
-
+import useGetTodos from './hook/useGetTodos'
+// import { TodoList } from './redux/todo/todoSlice.type'
+// import { RootState } from './redux/store'
+import './App.css'
+export interface TodoList {
+    [key: string]: {
+        item: string
+        done: boolean
+        connection: string[]
+    }
+}
 function App() {
     // const [fetchResult, setFetchResult] = useState<Record<TodoList>>({})
-    const [loading, setLoading] = useState<boolean>(false)
+    // const [loading, setLoading] = useState<boolean>(false)
     const [text, setText] = useState<string>('')
-    const todoList = useSelector((state: RootState) => getTodoList(state))
-    const todoListKeys = useSelector((state: RootState) =>
-        getTodolistKeys(state)
-    )
-    const dispatch = useDispatch()
-    const cancel = useRef(false)
-    useEffect(() => {
-        console.error('how many times render??')
-        if (cancel.current === false) {
-            getTodos()
-            return () => {
-                cancel.current = true
-            }
-        }
-    }, [])
+    // const todoList = useSelector((state: RootState) => getTodoList(state))
+    // const todoListKeys = useSelector((state: RootState) =>
+    //     getTodolistKeys(state)
+    // )
+    // const dispatch = useDispatch()
+    // const cancel = useRef(false)
+    const { todoList, todoListKeys, loading, getTodos } = useGetTodos()
 
-    const getTodos = async () => {
-        try {
-            const json = await callApi<TodoList>({
-                url: '/test',
-                method: 'get',
-            })
-            dispatch(addItem(json?.data))
-        } catch (e) {
-            console.log('e', e)
-        } finally {
-            setLoading(false)
-        }
-    }
+    // useEffect(() => {
+    //     console.error('how many times render??')
+    //     if (cancel.current === false) {
+    //         getTodos()
+    //         return () => {
+    //             cancel.current = true
+    //         }
+    //     }
+    // }, [])
+
+    // const getTodos = async () => {
+    //     try {
+    //         const json = await callApi<TodoList>({
+    //             url: '/test',
+    //             method: 'get',
+    //         })
+    //         dispatch(addItem(json?.data))
+    //     } catch (e) {
+    //         console.log('e', e)
+    //     } finally {
+    //         setLoading(false)
+    //     }
+    // }
     const handleUpdateRequest = async (updatedList: TodoList) => {
         try {
-            const json = await callApi<TodoList>({
+            const json = await callApi({
                 url: '/test',
                 method: 'put',
                 body: JSON.stringify({
@@ -57,7 +68,7 @@ function App() {
     }
     const handleDeleteRequest = async (list: TodoList, id: string) => {
         try {
-            const json = await callApi<any>({
+            const json = await callApi({
                 url: '/test',
                 method: 'delete',
                 body: JSON.stringify({
@@ -72,15 +83,13 @@ function App() {
         }
     }
     const handleComplete = async (id: string) => {
-        const updatedList = todoProvider.completeTodo(todoList, id)
-        await handleUpdateRequest(updatedList)
+        todoProvider.completeTodo(todoList, id)
         await getTodos()
     }
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log('does it arrive?')
         try {
-            const json = await callApi<any>({
+            const json = await callApi({
                 url: '/test',
                 method: 'post',
                 body: JSON.stringify({
@@ -90,36 +99,28 @@ function App() {
             })
             console.log('text', text)
             console.log('json', json)
-            await handleUpdateRequest(json.data)
             await getTodos()
         } catch (e) {
             console.log('e', e)
         }
+        setText('')
     }
-    // const handleConnect = () => {
-    //     const returned = todoProvider.addConnection(todoList, )
-    //     handleUpdate(returned)
-    //     getTodolist()
-    // }
-    // const handleDisconnect = () => {
-    //     getTodolist()
-    //     const returned = disConnect()
-    //     handleUpdate(returned)
-    //     getTodoList
-    // }
+    const handleConnect = async (id: string, refId: string) => {
+        todoProvider.addConnection(todoList, id, refId)
+        await getTodos()
+    }
+    const handleDisconnect = async (id: string, refId: string) => {
+        todoProvider.removeConnection(todoList, id, refId)
+        await getTodos()
+    }
 
-    // cosnt addTodoAction = () = {
-    //     getTodo()
-    //     handleAdd()
-    //     getTodos()
-    // }
     const handleDelete = async (id: string) => {
-        const update = await handleDeleteRequest(todoList, id)
-        await handleUpdateRequest(update)
+        await handleDeleteRequest(todoList, id)
         await getTodos()
     }
 
     if (loading) return <div>Loading.....</div>
+
     return (
         <>
             <form onSubmit={(e) => handleSubmit(e)}>
@@ -128,25 +129,7 @@ function App() {
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                 ></input>
-                <button
-                    className="button-with-margin"
-                    type="submit"
-                    // onClick={async () => {
-                    //     try {
-                    //         const json = await callApi<any>({
-                    //             url: '/test',
-                    //             method: 'post',
-                    //             body: JSON.stringify({
-                    //                 item: 'clean the room',
-                    //             }),
-                    //         })
-                    //         console.log('json', json)
-                    //         dispatch(addItem(json?.messages))
-                    //     } catch (e) {
-                    //         console.log('e', e)
-                    //     }
-                    // }}
-                >
+                <button className="button-with-margin" type="submit">
                     post test
                 </button>
             </form>
@@ -155,14 +138,36 @@ function App() {
             <br />
             <br />
             <ul className="fetch-result">
-                {todoListKeys.reverse().map((a: any, i: number) => {
+                {todoListKeys.reverse().map((id: any, i: number) => {
                     return (
-                        <Todo
-                            key={i}
-                            id={a}
-                            handleComplete={handleComplete}
-                            handleDelete={handleDelete}
-                        />
+                        <div className="list" key={i}>
+                            <Task
+                                id={id}
+                                handleComplete={handleComplete}
+                                handleDelete={handleDelete}
+                            />
+                            <Edit id={id}>
+                                <Search
+                                    id={id}
+                                    list={todoList}
+                                    idList={todoListKeys}
+                                    connect={handleConnect}
+                                />
+                            </Edit>
+                            <div>
+                                Tags:
+                                {todoList[id]?.connection.map((tag, i) => (
+                                    <div
+                                        onClick={() =>
+                                            handleDisconnect(id, tag)
+                                        }
+                                        key={i}
+                                    >
+                                        {todoList[tag]?.item}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
                     )
                 })}
             </ul>

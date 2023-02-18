@@ -7,7 +7,7 @@ interface ITodo {
     handleComplete: (id: string) => void
     handleDelete: (id: string) => void
 }
-export default function Todo(props: ITodo) {
+export default function Task(props: ITodo) {
     console.log('props.id', props.id)
     const todo = useSelector((state: RootState) =>
         getTodoItemById(state, props?.id)

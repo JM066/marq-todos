@@ -1,3 +1,3 @@
 export enum LOCAL_STORAGE {
-    TODO = 'todo',
+    TODOLIST = 'todoList',
 }

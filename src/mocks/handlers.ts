@@ -4,6 +4,7 @@ import todoProvider from '../todo/todo.provider'
 export const handlers = [
     rest.get('/test', (req, res, ctx) => {
         const result = todoProvider.getTodos()
+        console.error('get result', result)
         return res(
             ctx.status(200),
             ctx.json({
@@ -15,7 +16,6 @@ export const handlers = [
     rest.post('/test', async (req, res, ctx) => {
         const { list, item } = await req.json()
         const result = todoProvider.addTodo(list, item)
-        // const result = todoProvider.getTodoList()
         return res(
             ctx.status(200),
             ctx.json({
@@ -25,9 +25,7 @@ export const handlers = [
     }),
     rest.put('/test', async (req, res, ctx) => {
         const { data } = await req.json()
-        todoProvider.updateItem(data)
-        // todoProvider.completeTodo(id)
-        // const result = todoProvider.getTodoList()
+        todoProvider.editTodo(data)
         return res(
             ctx.status(200),
             ctx.json({
@@ -39,7 +37,6 @@ export const handlers = [
     rest.delete('/test', async (req, res, ctx) => {
         const { list, id } = await req.json()
         const rest = todoProvider.removeTodo(list, id)
-        // const result = todoProvider.getTodoList()
         return res(
             ctx.status(200),
             ctx.json({
