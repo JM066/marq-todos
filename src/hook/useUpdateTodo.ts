@@ -1,13 +1,14 @@
 import { useState } from 'react'
 import callApi from '../utils/http.utils'
+import { TodoList } from '../redux/todo/todoSlice.type'
 
 type TodoData = {
     loading: boolean
     updateTodo: () => Promise<void>
 }
-export default function useUpdateTodo<T>(
+export default function useUpdateTodo(
     action: string,
-    list: T,
+    list: TodoList,
     id: string,
     refId?: string
 ): TodoData {

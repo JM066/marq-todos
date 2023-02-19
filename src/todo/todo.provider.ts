@@ -89,6 +89,12 @@ const todoProvider: ITodoProvider = {
         updateItem(state)
         return state
     },
+    undoCompleteTodo: (todoList: TodoList, item: string) => {
+        let state = _.cloneDeep(todoList)
+        state[item].done = false
+        updateItem(state)
+        return state
+    },
     removeConnection: (todoList: TodoList, id: string, refItemId: string) => {
         const state = _.cloneDeep(todoList)
         state[id].connection = state[id].connection.filter(

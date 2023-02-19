@@ -29,7 +29,12 @@ export const handlers = [
             todoProvider.addConnection(list, id, refId)
         }
         if (action === 'complete') {
+            console.error('action compplete?', action)
             todoProvider.completeTodo(list, id)
+        }
+        if (action === 'undoComplete') {
+            console.error('action undo compplete?', action)
+            todoProvider.undoCompleteTodo(list, id)
         }
         if (action === 'disconnect') {
             todoProvider.removeConnection(list, id, refId)

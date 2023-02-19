@@ -13,7 +13,7 @@ export default function Search(props: ISearch) {
         id: '',
         task: '',
     })
-    const { updateTodo } = useUpdateTodo<TodoList>(
+    const { updateTodo } = useUpdateTodo(
         'connect',
         props.list,
         props.id,

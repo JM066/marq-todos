@@ -3,7 +3,8 @@ import Task from './component/Task/index'
 import Edit from './component/Edit/index'
 import Search from './component/Search/index'
 import Delete from './component/Delete/index'
-import Tag from './component/Tag/index'
+import TagList from './component/TagList/index'
+// import Tag from './component/Tag/index'
 import useGetTodos from './hook/useGetTodos'
 import useAddTodo from './hook/useAddTodo'
 import { TodoList } from './redux/todo/todoSlice.type'
@@ -20,7 +21,7 @@ function App() {
         await getTodos()
         setText('')
     }
-
+    console.error('LOAD MAIN')
     if (loading) return <div>Loading.....</div>
 
     return (
@@ -36,14 +37,11 @@ function App() {
                 </button>
             </form>
 
-            <button className="button-with-margin clear">Clear!</button>
-            <br />
-            <br />
             <ul className="fetch-result">
                 {todoListKeys.reverse().map((id: any, i: number) => {
                     return (
                         <div className="list" key={i}>
-                            <Task id={id} list={todoList} reload={getTodos} />
+                            <Task id={id} reload={getTodos} />
                             <Delete id={id} list={todoList} reload={getTodos} />
                             <Edit id={id}>
                                 <Search
@@ -53,20 +51,7 @@ function App() {
                                     reload={getTodos}
                                 />
                             </Edit>
-                            <div>
-                                Tags:
-                                {todoList[id]?.connection.map((refId, i) => (
-                                    <Tag
-                                        key={i}
-                                        id={id}
-                                        list={todoList}
-                                        refId={refId}
-                                        reload={getTodos}
-                                    >
-                                        {todoList[refId]?.item}
-                                    </Tag>
-                                ))}
-                            </div>
+                            <TagList id={id} reload={getTodos} />
                         </div>
                     )
                 })}

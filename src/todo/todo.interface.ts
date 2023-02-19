@@ -11,6 +11,7 @@ export interface ITodoProvider {
         refItemId: string
     ) => TodoList
     completeTodo: (todoList: TodoList, item: string) => TodoList
+    undoCompleteTodo: (todoList: TodoList, item: string) => TodoList
     removeConnection: (
         todoList: TodoList,
         id: string,

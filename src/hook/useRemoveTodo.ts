@@ -9,7 +9,6 @@ export default function useRemoveTodo<T>(list: T, id: string): TodoData {
     const [loading, setLoading] = useState<boolean>(false)
 
     const removeTodo = async () => {
-        console.error('fired?')
         setLoading(true)
         try {
             const json = await callApi({
