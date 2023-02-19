@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import type { RootState } from '../../redux/store'
 import { getTodoItemById, getTodoList } from '../../redux/todo/todoSlice'
@@ -14,19 +14,29 @@ export default function Task(props: ITask) {
     const todo = useSelector((state: RootState) =>
         getTodoItemById(state, props?.id)
     )
-    console.error('loaddddd??')
-    useEffect(() => {
-        if (todo !== undefined) {
-            console.log('todo,', todo)
-        }
-    }, [todo])
-
+    const [isChecked, setIsChecked] = useState<boolean>(todo.done)
+    const SpecificStory = isChecked ? Finished : UnFinished
     return (
         <div>
-            <div>
+            <input
+                type="checkbox"
+                checked={isChecked}
+                onChange={() => setIsChecked((prev) => !prev)}
+            />
+            <SpecificStory
+                id={props.id}
+                list={todoList}
+                reload={props.reload}
+                isChecked={isChecked}
+            >
+                <div>
+                    Item: {todo.item} Status: {isChecked ? 'Done' : 'Not Done'}
+                </div>
+            </SpecificStory>
+            {/* <div>
                 Item: {todo.item} Status: {todo.done ? 'Done' : 'Not Done'}
-            </div>
-            {todo.done ? (
+            </div> */}
+            {/* {todo.done ? (
                 <UnFinished
                     id={props.id}
                     list={todoList}
@@ -34,7 +44,7 @@ export default function Task(props: ITask) {
                 />
             ) : (
                 <Finished id={props.id} list={todoList} reload={props.reload} />
-            )}
+            )} */}
         </div>
     )
 }

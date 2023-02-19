@@ -1,0 +1,6 @@
+.Strikethrough {
+    text-decoration-line: line-through;
+    text-decoration-color: red;
+    text-decoration-thickness: 3px;
+    width: 100%;
+}

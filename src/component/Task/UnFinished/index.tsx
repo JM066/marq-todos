@@ -1,10 +1,12 @@
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren, useEffect } from 'react'
 import useUpdateTodo from '../../../hook/useUpdateTodo'
 import { TodoList } from '../../../redux/todo/todoSlice.type'
 import { ITask } from '../index'
 
 interface IUnFinished extends ITask {
     list: TodoList
+    isChecked: boolean
+    // handleClick: () => void
 }
 
 export default function UnFinished(props: PropsWithChildren<IUnFinished>) {
@@ -14,5 +16,10 @@ export default function UnFinished(props: PropsWithChildren<IUnFinished>) {
         await updateTodo()
         props.reload()
     }
-    return <button onClick={handleClick}>click unfinished</button>
+
+    return (
+        <div className="undo-strikethrough" onClick={handleClick}>
+            {props.children}
+        </div>
+    )
 }

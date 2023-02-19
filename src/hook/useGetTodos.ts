@@ -1,21 +1,13 @@
 import { useState, useEffect, useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { addItem, getTodolistKeys, getTodoList } from '../redux/todo/todoSlice'
+import { useDispatch } from 'react-redux'
+import { addItem } from '../redux/todo/todoSlice'
 import callApi from '../utils/http.utils'
-import { RootState } from '../redux/store'
-import { TodoList } from '../redux/todo/todoSlice.type'
 
 type TodoData = {
-    todoList: TodoList
     loading: boolean
-    todoListKeys: string[]
     getTodos: () => Promise<void>
 }
 export default function useGetTodos(): TodoData {
-    const todoList = useSelector((state: RootState) => getTodoList(state))
-    const todoListKeys = useSelector((state: RootState) =>
-        getTodolistKeys(state)
-    )
     const [loading, setLoading] = useState<boolean>(false)
     const dispatch = useDispatch()
     const cancel = useRef(false)
@@ -46,5 +38,5 @@ export default function useGetTodos(): TodoData {
         }
     }
 
-    return { todoList, todoListKeys, loading, getTodos }
+    return { loading, getTodos }
 }
