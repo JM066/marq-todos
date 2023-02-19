@@ -73,6 +73,7 @@ const todoProvider: ITodoProvider = {
         return state
     },
     completeTodo: (todoList: TodoList, item: string) => {
+        console.error('how many fire?')
         let state = _.cloneDeep(todoList)
         if (state[item].connection.length > 0) {
             const doneState = state[item].connection.filter((id: string) => {

@@ -3,6 +3,7 @@ import Tag from '../Tag/index'
 import { useSelector } from 'react-redux'
 import type { RootState } from '../../redux/store'
 import { getTodoList } from '../../redux/todo/todoSlice'
+import styles from './TagList.module.css'
 
 export interface ITagList {
     id: string
@@ -12,7 +13,7 @@ export interface ITagList {
 export default function TagList(props: ITagList) {
     const todoList = useSelector((state: RootState) => getTodoList(state))
     return (
-        <div>
+        <div className={styles.TagList}>
             Tags:
             {todoList[props.id]?.connection.map((refId, i) => (
                 <Tag

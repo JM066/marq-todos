@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react'
 import useUpdateTodo from '../../hook/useUpdateTodo'
 import { TodoList } from '../../redux/todo/todoSlice.type'
+import styles from './Tag.module.css'
 
 interface ITag {
     id: string
@@ -21,10 +22,8 @@ export default function Tag(props: PropsWithChildren<ITag>) {
         props.reload()
     }
     return (
-        <div>
-            <button className="button-with-margin" onClick={handleDisconnect}>
-                {props.children}
-            </button>
+        <div className={styles.Tag} onClick={handleDisconnect}>
+            {props.children}
         </div>
     )
 }

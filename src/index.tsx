@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './styles.css'
+import Layout from './component/Layout/index'
 import App from './pages/App'
 import { store } from './redux/store'
 import { Provider } from 'react-redux'
 import reportWebVitals from './reportWebVitals'
+import './styles.css'
 
 if (process.env.NODE_ENV === 'development') {
     const { worker } = require('./mocks/browser')
@@ -15,7 +16,9 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
     <React.StrictMode>
         <Provider store={store}>
-            <App />
+            <Layout>
+                <App />
+            </Layout>
         </Provider>
     </React.StrictMode>
 )

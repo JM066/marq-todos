@@ -15,7 +15,7 @@ export default function useUpdateTodo(
     const [loading, setLoading] = useState<boolean>(false)
 
     const updateTodo = async () => {
-        console.error('fired?')
+        console.error('action?', action)
         setLoading(true)
         try {
             const json = await callApi({

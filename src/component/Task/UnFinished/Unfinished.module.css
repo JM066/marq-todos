@@ -1,0 +1,9 @@
+.UnFinished {
+    text-decoration-line: none;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.Input {
+    margin-right: 10px;
+}

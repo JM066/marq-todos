@@ -1,0 +1,6 @@
+.Tag {
+    cursor: pointer;
+}
+.Tag:hover {
+    color: gray;
+}

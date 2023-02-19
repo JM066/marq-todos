@@ -22,13 +22,13 @@ function App() {
     if (loading) return <div>Loading.....</div>
 
     return (
-        <div className="container-col">
+        <div className={styles.App}>
             <Form list={todoList} reload={getTodos} />
-            <ul className="fetch-result">
+            <ul className={styles.TodoList}>
                 {todoListKeys.reverse().map((id: any, i: number) => {
                     return (
                         <li className="container-row" key={i}>
-                            <div className="container-col">
+                            <div className={styles.TodoItem}>
                                 <Task id={id} reload={getTodos} />
                                 <TagList id={id} reload={getTodos} />
                             </div>

@@ -1,0 +1,13 @@
+.Layout {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    height: 100vh;
+    padding: 5rem 5rem;
+}
+
+/* @media (min-width: 800px) {
+    .Layout {
+        padding: 0 5rem;
+    }
+} */
