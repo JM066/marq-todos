@@ -14,7 +14,6 @@ export default function TagList(props: ITagList) {
     const todoList = useSelector((state: RootState) => getTodoList(state))
     return (
         <div className={styles.TagList}>
-            Tags:
             {todoList[props.id]?.connection.map((refId, i) => (
                 <Tag
                     key={i}
@@ -23,7 +22,7 @@ export default function TagList(props: ITagList) {
                     refId={refId}
                     reload={props.reload}
                 >
-                    {todoList[refId]?.item}
+                    {`@ ${todoList[refId]?.item}`}
                 </Tag>
             ))}
         </div>

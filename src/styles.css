@@ -14,7 +14,7 @@ code {
 } */
 :root {
     /* colors */
-    --bg-gray: #d4d2cd;
+    --bg-gray: #edede4;
     --text: #000;
     --primary: #b3b2af;
     --secondary: #e37f7f;
@@ -41,4 +41,11 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+.checkbox-finished {
+    margin-right: 10px;
+    width: 40px;
+    height: 40px;
+    background-color: pink;
+    border-radius: 10px;
 }

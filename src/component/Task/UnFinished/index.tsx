@@ -1,4 +1,6 @@
 import React, { PropsWithChildren } from 'react'
+import { ImCheckboxUnchecked } from 'react-icons/im'
+
 import useUpdateTodo from '../../../hook/useUpdateTodo'
 import { TodoList } from '../../../redux/todo/todoSlice.type'
 import { ITask } from '../index'
@@ -17,18 +19,15 @@ export default function UnFinished(props: PropsWithChildren<IUnFinished>) {
         props.reload()
     }
     const handleCheck = async (e: any) => {
-        e.stopImmediatePropagation()
+        e.stopPropagation()
         await updateTodo()
         props.reload()
     }
     return (
         <div className={styles.UnFinished} onClick={handleClick}>
-            <input
-                type="checkbox"
-                checked={props.state}
-                onChange={handleCheck}
-                className={styles.Input}
-            />
+            <div className={styles.Icon} onClick={handleCheck}>
+                <ImCheckboxUnchecked className={styles.UnChecked} />
+            </div>
             {props.children}
         </div>
     )

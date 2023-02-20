@@ -11,6 +11,13 @@
     gap: 25px;
     width: 100%;
 }
+.TodoWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-gray);
+}
 .TodoItem {
     width: 100%;
 }

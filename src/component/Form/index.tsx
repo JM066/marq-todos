@@ -3,6 +3,7 @@ import useAddTodo from '../../hook/useAddTodo'
 import Button from '../Button/'
 import Input from '../Input/index'
 import { TodoList } from '../../redux/todo/todoSlice.type'
+import styles from './Form.module.css'
 
 interface IForm {
     list: TodoList
@@ -20,9 +21,9 @@ export default function Form(props: PropsWithChildren<IForm>) {
     }
 
     return (
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form className={styles.Form} onSubmit={(e) => handleSubmit(e)}>
             <Input text={text} setText={setText} />
-            <Button type="submit">post test</Button>
+            <Button type="submit">Add Todo</Button>
         </form>
     )
 }

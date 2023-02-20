@@ -1,4 +1,5 @@
 import React from 'react'
+import styles from './Button.module.css'
 interface IButton {
     type: 'button' | 'submit' | 'reset' | undefined
 }
@@ -15,5 +16,9 @@ export default function Button(props: React.PropsWithChildren<IButton>) {
     //     }
     // }
 
-    return <button type={props.type || 'button'}>{props.children}</button>
+    return (
+        <button className={styles.Button} type={props.type || 'button'}>
+            {props.children}
+        </button>
+    )
 }

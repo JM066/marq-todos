@@ -1,7 +1,8 @@
 import React, { PropsWithChildren } from 'react'
+import { BsCheckSquareFill } from 'react-icons/bs'
 import useUpdateTodo from '../../../hook/useUpdateTodo'
-import { TodoList } from '../../../redux/todo/todoSlice.type'
 import { ITask } from '../index'
+import { TodoList } from '../../../redux/todo/todoSlice.type'
 import styles from './Finished.module.css'
 interface IFinished extends ITask {
     list: TodoList
@@ -15,19 +16,17 @@ export default function Finished(props: PropsWithChildren<IFinished>) {
         props.reload()
     }
     const handleCheck = async (e: any) => {
-        e.stopImmediatePropagation()
+        e.stopPropagation()
         await updateTodo()
         props.reload()
     }
     return (
         <div className={styles.Finished} onClick={handleClick}>
-            <input
-                type="checkbox"
-                checked={props.state}
-                onChange={handleCheck}
-                className={styles.Input}
-            />
-            <div>{props.children}</div>
+            <div className={styles.Icon} onClick={handleCheck}>
+                <BsCheckSquareFill className={styles.Checked} />
+            </div>
+
+            {props.children}
         </div>
     )
 }

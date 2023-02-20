@@ -27,7 +27,7 @@ function App() {
             <ul className={styles.TodoList}>
                 {todoListKeys.reverse().map((id: any, i: number) => {
                     return (
-                        <li className="container-row" key={i}>
+                        <li className={styles.TodoWrapper} key={i}>
                             <div className={styles.TodoItem}>
                                 <Task id={id} reload={getTodos} />
                                 <TagList id={id} reload={getTodos} />
