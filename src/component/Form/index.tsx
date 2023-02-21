@@ -22,8 +22,10 @@ export default function Form(props: PropsWithChildren<IForm>) {
 
     return (
         <form className={styles.Form} onSubmit={(e) => handleSubmit(e)}>
-            <Input text={text} setText={setText} />
-            <Button type="submit">Add Todo</Button>
+            <Input text={text} onchange={setText} />
+            <Button color="secondary" type="submit" size="max">
+                Add Todo
+            </Button>
         </form>
     )
 }

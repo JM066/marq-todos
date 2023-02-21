@@ -1,4 +1,5 @@
 import useRemoveTodo from '../../hook/useRemoveTodo'
+import Button from '../Button/index'
 import { TodoList } from '../../redux/todo/todoSlice.type'
 
 interface IDelete {
@@ -13,10 +14,8 @@ export default function Delete(props: IDelete) {
         props.reload()
     }
     return (
-        <div>
-            <button className="button-with-margin" onClick={handleDelete}>
-                Delete
-            </button>
-        </div>
+        <Button type="button" color="primary" onclick={handleDelete}>
+            Delete
+        </Button>
     )
 }

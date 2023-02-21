@@ -1,0 +1,14 @@
+.ModalContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.Close {
+    align-self: end;
+    color: var(--secondary);
+    cursor: pointer;
+}
+.Icon {
+    width: 30px;
+    height: 30px;
+}

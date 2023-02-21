@@ -80,7 +80,7 @@ const todoProvider: ITodoProvider = {
                 return state[id]?.done === false
             })
             if (doneState.length > 0) {
-                window.alert(`please complete all the referred tasks`)
+                window.alert(`Please complete all the referred tasks`)
             } else {
                 state[item].done = true
             }

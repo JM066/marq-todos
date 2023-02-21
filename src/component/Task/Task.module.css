@@ -1,7 +1,7 @@
-.Task {
-    height: 2.5rem;
+.TaskContainer {
 }
-.Item {
+.Task {
+    font-size: 20px;
 }
 .done {
     color: #3d3b3b;

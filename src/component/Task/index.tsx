@@ -19,7 +19,7 @@ export default function Task(props: ITask) {
     const Component = todo.done ? Finished : UnFinished
 
     return (
-        <div className={styles.Task}>
+        <div className={styles.TaskContainer}>
             <Component
                 state={todo.done}
                 id={props.id}
@@ -27,7 +27,7 @@ export default function Task(props: ITask) {
                 reload={props.reload}
             >
                 <span
-                    className={classNames(styles.Item, {
+                    className={classNames(styles.Task, {
                         [styles.done]: todo.done,
                     })}
                 >

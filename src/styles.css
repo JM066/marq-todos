@@ -19,11 +19,13 @@ code {
     --primary: #b3b2af;
     --secondary: #e37f7f;
     --box-shadow: 0 0 20px 5px rgba(0, 0, 0, 0.1);
+    --round: 5px;
 }
 
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
 }
 body {

@@ -5,19 +5,3 @@
     align-items: center;
     width: 100%;
 }
-.TodoList {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    width: 100%;
-}
-.TodoWrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--bg-gray);
-}
-.TodoItem {
-    width: 100%;
-}

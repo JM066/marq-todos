@@ -1,0 +1,28 @@
+.TodoListWrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.TodoList {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.TodoItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-height: 3rem;
+    padding: 10px 20px;
+    border-radius: var(--round);
+    background-color: var(--bg-gray);
+}
+.TodoTitle {
+    width: 100%;
+}
+.ActionContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

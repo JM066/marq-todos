@@ -1,4 +1,9 @@
 .TagList {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+}
+.padding {
+    padding: 10px 0;
+    gap: 10px;
 }

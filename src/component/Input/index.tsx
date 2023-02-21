@@ -1,15 +1,23 @@
 import styles from './Input.module.css'
+import classNames from 'classnames'
 interface IInput {
     text: string
-    setText: React.Dispatch<React.SetStateAction<string>>
+    onchange: (e: string) => void
+    placeholder?: string
+    classname?: string
 }
 export default function Input(props: IInput) {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        props.onchange(e.currentTarget.value)
+    }
+
     return (
         <input
             type="text"
-            className={styles.Input}
+            className={classNames(styles.Input, props.classname)}
             value={props.text}
-            onChange={(e) => props.setText(e.target.value)}
+            onChange={handleChange}
+            placeholder={props.placeholder || ''}
         ></input>
     )
 }

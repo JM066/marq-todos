@@ -1,6 +1,7 @@
 import React from 'react'
 import Modal from 'react-modal'
-
+import { RiCloseCircleFill } from 'react-icons/ri'
+import styles from './ModalContainer.module.css'
 interface IModalContainer {
     isOpen: boolean
     closeModal: () => void
@@ -24,17 +25,16 @@ export default function ModalContainer(
                     height: '70%',
                     top: '50%',
                     left: '50%',
-                    right: 'auto',
-                    bottom: 'auto',
-                    marginRight: '-50%',
                     transform: 'translate(-50%, -50%)',
                 },
             }}
             contentLabel="Example Modal"
         >
-            <div className="w-full h-full flex flex-col">
-                <div onClick={props.closeModal}>X</div>
-                <div className="w-full h-full ">{props.children}</div>
+            <div className={styles.ModalContainer}>
+                <div onClick={props.closeModal} className={styles.Close}>
+                    <RiCloseCircleFill className={styles.Icon} />
+                </div>
+                {props.children}
             </div>
         </Modal>
     )

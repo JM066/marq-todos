@@ -1,0 +1,17 @@
+/* .Search {
+    width: 100%;
+    backgound-color: blue;
+} */
+.SearchInput {
+    margin-bottom: 10px;
+}
+.RefList {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    gap: 10px;
+}
+.RefItem:hover {
+    cursor: pointer;
+    color: #5b5b5c;
+}

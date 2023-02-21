@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import useUpdateTodo from '../../hook/useUpdateTodo'
+import Input from '../Input/index'
+import Button from '../Button/index'
 import { TodoList } from '../../redux/todo/todoSlice.type'
+import styles from './Search.module.css'
+import { o } from 'msw/lib/SetupApi-b2f0e5ac'
 interface ISearch {
     id: string
     list: TodoList
@@ -22,10 +26,10 @@ export default function Search(props: ISearch) {
     const handleSelect = (item: string, id: string) => {
         setSearch({ id: id, task: item })
     }
-    const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInput = (value: string) => {
         setSearch({
             id: '',
-            task: e.currentTarget.value.toLocaleLowerCase() || '',
+            task: value.toLocaleLowerCase() || '',
         })
     }
     const handleConnect = async () => {
@@ -34,7 +38,7 @@ export default function Search(props: ISearch) {
     }
     const handleSearch = () => {
         return (
-            <div>
+            <div className={styles.RefList}>
                 {props.idList
                     .filter(
                         (id: string) =>
@@ -45,6 +49,7 @@ export default function Search(props: ISearch) {
                     .map((filteredId, i) => (
                         <div
                             key={i}
+                            className={styles.RefItem}
                             onClick={() =>
                                 handleSelect(
                                     props.list[filteredId].item,
@@ -59,14 +64,26 @@ export default function Search(props: ISearch) {
         )
     }
     return (
-        <div>
-            <input
-                type="text"
-                value={search.task}
-                onChange={(e) => handleInput(e)}
+        <div className={styles.Search}>
+            <Input
+                classname={styles.SearchInput}
+                text={search.task}
+                onchange={handleInput}
+                placeholder="Search a task to connect"
             />
             {search.task !== undefined && handleSearch()}
-            <button onClick={handleConnect}>{search.id}</button>
+            {search.task && (
+                <div className={styles.RefList}>
+                    <div>Click to Connect</div>
+                    <Button
+                        type="button"
+                        color="secondary"
+                        onclick={handleConnect}
+                    >
+                        {search.task}
+                    </Button>
+                </div>
+            )}
         </div>
     )
 }

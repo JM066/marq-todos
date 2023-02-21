@@ -1,6 +1,7 @@
 import React from 'react'
 import Tag from '../Tag/index'
 import { useSelector } from 'react-redux'
+import classNames from 'classnames'
 import type { RootState } from '../../redux/store'
 import { getTodoList } from '../../redux/todo/todoSlice'
 import styles from './TagList.module.css'
@@ -13,7 +14,11 @@ export interface ITagList {
 export default function TagList(props: ITagList) {
     const todoList = useSelector((state: RootState) => getTodoList(state))
     return (
-        <div className={styles.TagList}>
+        <div
+            className={classNames(styles.TagList, {
+                [styles.padding]: todoList[props.id]?.connection.length > 0,
+            })}
+        >
             {todoList[props.id]?.connection.map((refId, i) => (
                 <Tag
                     key={i}
@@ -22,7 +27,7 @@ export default function TagList(props: ITagList) {
                     refId={refId}
                     reload={props.reload}
                 >
-                    {`@ ${todoList[refId]?.item}`}
+                    {todoList[refId] ? `@${todoList[refId]?.item}` : ''}
                 </Tag>
             ))}
         </div>

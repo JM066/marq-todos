@@ -1,0 +1,19 @@
+.FooterContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.PageWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0;
+    gap: 10px;
+    width: 50%;
+}
+.PageNum:hover {
+    background-color: var(--secondary);
+    border-radius: 50%;
+}

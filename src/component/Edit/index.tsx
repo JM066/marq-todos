@@ -1,4 +1,5 @@
 import React, { useState, PropsWithChildren } from 'react'
+import Button from '../Button/index'
 
 import ModalContainer from '../ModalContainer'
 interface IEdit {
@@ -11,12 +12,17 @@ export default function Edit(props: PropsWithChildren<IEdit>) {
         setIsOpen(false)
     }
     return (
-        <div>
-            <button onClick={() => setIsOpen(true)}>Edit</button>
+        <>
+            <Button
+                type="button"
+                color="primary"
+                onclick={() => setIsOpen(true)}
+            >
+                Edit
+            </Button>
             <ModalContainer isOpen={isOpen} closeModal={closeModal}>
-                <div>Connect Tasks</div>
                 {props.children}
             </ModalContainer>
-        </div>
+        </>
     )
 }
