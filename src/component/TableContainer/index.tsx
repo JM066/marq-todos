@@ -5,10 +5,11 @@ import { getTodoList, getTodolistKeys } from '../../redux/todo/todoSlice'
 import { RootState } from '../../redux/store'
 import TableFooter from '../TableFooter/index'
 import Task from '../Task/index'
-import Edit from '../Edit/index'
+import EditContainer from '../EditContainer/index'
 import Search from '../Search/index'
 import Delete from '../Delete/index'
 import TagList from '../TagList/index'
+import Edit from '../Edit/index'
 import getLocalStorage, { LOCAL_STORAGE_KEY } from '../../localStorage'
 
 import styles from './TableConainer.module.css'
@@ -24,6 +25,7 @@ export default function TableContainer(props: ITableContainer) {
     const todoListKeys = useSelector((state: RootState) =>
         getTodolistKeys(state)
     )
+
     const { data } = usePagination(props.range, page, todoListKeys.reverse())
     return (
         <div className={styles.TodoListWrapper}>
@@ -34,15 +36,23 @@ export default function TableContainer(props: ITableContainer) {
                             <Task id={id} reload={props.getTodos} />
                             <TagList id={id} reload={props.getTodos} />
                         </div>
+
                         <div className={styles.ActionContainer}>
-                            <Edit id={id}>
+                            <EditContainer id={id} type="connect">
                                 <Search
                                     id={id}
                                     list={todoList}
                                     idList={todoListKeys}
                                     reload={props.getTodos}
                                 />
-                            </Edit>
+                            </EditContainer>
+                            <EditContainer id={id} type="edit">
+                                <Edit
+                                    id={id}
+                                    list={todoList}
+                                    reload={props.getTodos}
+                                ></Edit>
+                            </EditContainer>
                             <Delete
                                 id={id}
                                 list={todoList}

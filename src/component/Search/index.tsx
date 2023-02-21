@@ -4,7 +4,7 @@ import Input from '../Input/index'
 import Button from '../Button/index'
 import { TodoList } from '../../redux/todo/todoSlice.type'
 import styles from './Search.module.css'
-import { o } from 'msw/lib/SetupApi-b2f0e5ac'
+
 interface ISearch {
     id: string
     list: TodoList
@@ -17,6 +17,7 @@ export default function Search(props: ISearch) {
         id: '',
         task: '',
     })
+    const [isItemSelected, setIsItemSelected] = useState<boolean>(false)
     const { updateTodo } = useUpdateTodo(
         'connect',
         props.list,
@@ -25,6 +26,7 @@ export default function Search(props: ISearch) {
     )
     const handleSelect = (item: string, id: string) => {
         setSearch({ id: id, task: item })
+        setIsItemSelected(true)
     }
     const handleInput = (value: string) => {
         setSearch({
@@ -65,6 +67,7 @@ export default function Search(props: ISearch) {
     }
     return (
         <div className={styles.Search}>
+            <h2>Connect Tasks</h2>
             <Input
                 classname={styles.SearchInput}
                 text={search.task}
@@ -72,7 +75,7 @@ export default function Search(props: ISearch) {
                 placeholder="Search a task to connect"
             />
             {search.task !== undefined && handleSearch()}
-            {search.task && (
+            {isItemSelected && (
                 <div className={styles.RefList}>
                     <div>Click to Connect</div>
                     <Button

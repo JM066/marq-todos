@@ -1,6 +1,31 @@
 import { rest } from 'msw'
 import todoProvider from '../todo/todo.provider'
+import { TodoList } from '../redux/todo/todoSlice.type'
 
+function filterAction(
+    action: string,
+    list: TodoList,
+    id: string,
+    refId: string,
+    title: string
+) {
+    switch (action) {
+        case 'connect':
+            todoProvider.addConnection(list, id, refId)
+            break
+        case 'complete':
+            todoProvider.completeTodo(list, id)
+            break
+        case 'undoComplete':
+            todoProvider.undoCompleteTodo(list, id)
+            break
+        case 'disconnect':
+            todoProvider.removeConnection(list, id, refId)
+            break
+        default:
+            todoProvider.editTodo(list, id, title)
+    }
+}
 export const handlers = [
     rest.get('/test', (req, res, ctx) => {
         const result = todoProvider.getTodos()
@@ -24,21 +49,22 @@ export const handlers = [
         )
     }),
     rest.put('/test', async (req, res, ctx) => {
-        const { action, list, id, refId } = await req.json()
-        if (action === 'connect') {
-            todoProvider.addConnection(list, id, refId)
-        }
-        if (action === 'complete') {
-            console.error('action compplete?', action)
-            todoProvider.completeTodo(list, id)
-        }
-        if (action === 'undoComplete') {
-            console.error('action undo compplete?', action)
-            todoProvider.undoCompleteTodo(list, id)
-        }
-        if (action === 'disconnect') {
-            todoProvider.removeConnection(list, id, refId)
-        }
+        const { action, list, id, refId, title } = await req.json()
+        filterAction(action, list, id, refId, title)
+        // if (action === 'connect') {
+        //     todoProvider.addConnection(list, id, refId)
+        // }
+        // if (action === 'complete') {
+        //     console.error('action compplete?', action)
+        //     todoProvider.completeTodo(list, id)
+        // }
+        // if (action === 'undoComplete') {
+        //     console.error('action undo compplete?', action)
+        //     todoProvider.undoCompleteTodo(list, id)
+        // }
+        // if (action === 'disconnect') {
+        //     todoProvider.removeConnection(list, id, refId)
+        // }
 
         return res(
             ctx.status(200),

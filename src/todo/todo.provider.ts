@@ -19,7 +19,9 @@ function generateUid() {
 function updateItem(updatedList: TodoList) {
     setLocalStorage(LOCAL_STORAGE_KEY.TODOLIST, updatedList)
 }
-
+function createTime() {
+    return new Date()
+}
 const todoProvider: ITodoProvider = {
     addTodo: (todoList: TodoList, item: string) => {
         const id = generateUid()
@@ -29,6 +31,7 @@ const todoProvider: ITodoProvider = {
                 postedAt: `message(${Date.now()})`,
                 done: false,
                 connection: [],
+                time: createTime(),
             },
         }
 
@@ -42,8 +45,10 @@ const todoProvider: ITodoProvider = {
         return existing ? JSON.parse(existing as string) : {}
     },
 
-    editTodo: (updatedList: TodoList) => {
-        updateItem(updatedList)
+    editTodo: (list: TodoList, id, title) => {
+        let state = _.cloneDeep(list)
+        state[id].item = title
+        updateItem(state)
     },
 
     removeTodo: (todoList: TodoList, item: string) => {

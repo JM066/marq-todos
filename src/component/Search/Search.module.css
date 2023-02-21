@@ -1,9 +1,10 @@
-/* .Search {
-    width: 100%;
-    backgound-color: blue;
-} */
+.Search {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
 .SearchInput {
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 .RefList {
     display: flex;
