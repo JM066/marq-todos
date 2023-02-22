@@ -18,6 +18,6 @@ export default function Input(props: IInput) {
             value={props.text}
             onChange={handleChange}
             placeholder={props.placeholder || ''}
-        ></input>
+        />
     )
 }

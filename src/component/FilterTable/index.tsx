@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-
-import {
-    getTodoList,
-    getTodolistKeys,
-    getCompletedTodoIds,
-    getActiveTodoIds,
-} from '../../redux/todo/todoSlice'
+import { getTodolistKeys } from '../../redux/todo/todoSlice'
+import { TodoList } from '../../redux/todo/todoSlice.type'
 import { RootState } from '../../redux/store'
+import usePagination from '../../hook/usePagination'
 import TableFooter from '../TableFooter/index'
 import Task from '../Task/index'
 import EditContainer from '../EditContainer/index'
@@ -15,11 +10,14 @@ import Search from '../Search/index'
 import Delete from '../Delete/index'
 import TagList from '../TagList/index'
 import Edit from '../Edit/index'
-import getLocalStorage, { LOCAL_STORAGE_KEY } from '../../localStorage'
-// import FilterList from '../FilterList/index'
-import { TodoList } from '../../redux/todo/todoSlice.type'
-import styles from './TableConainer.module.css'
-import usePagination from '../../hook/usePagination'
+import Typography from '../Typography'
+import styles from './FilterTable.module.css'
+
+export enum FilterType {
+    ALL = 'all',
+    COMPLETE = 'complete',
+    ACTIVE = 'active',
+}
 
 interface IFilterTable {
     page: number
@@ -34,34 +32,10 @@ export default function FilterTable(props: IFilterTable) {
         getTodolistKeys(state)
     )
 
-    // const [page, setPage] = useState<number>(
-    //     Number(getLocalStorage(LOCAL_STORAGE_KEY.CURRENT_PAGE)) || 1
-    // )
-    // const [selected, setSelected] = useState<'all' | 'complete' | 'active'>(
-    //     'all'
-    // )
-    // const completedTodos = useSelector((state: RootState) =>
-    //     getCompletedTodoIds(state)
-    // )
-    // const activeTodos = useSelector((state: RootState) =>
-    //     getActiveTodoIds(state)
-    // )
-    // const todoList = useSelector((state: RootState) => getTodoList(state))
-    // const allTodos = useSelector((state: RootState) => getTodolistKeys(state))
-
-    // const filterType = () => {
-    //     if (selected === 'active') {
-    //         return activeTodos
-    //     } else if (selected === 'complete') {
-    //         return completedTodos
-    //     } else {
-    //         return allTodos
-    //     }
-    // }
     const { data } = usePagination(
-        props?.range,
-        props?.page,
-        props?.filteredList?.reverse()
+        props.range,
+        props.page,
+        props.filteredList.reverse()
     )
     return (
         <div className={styles.TodoListWrapper}>
@@ -97,20 +71,25 @@ export default function FilterTable(props: IFilterTable) {
                                         reload={props.getTodos}
                                     />
                                 </div>
-                                <div className={styles.Caption}>
+                                <Typography
+                                    as="p"
+                                    color="tertiary"
+                                    alignEnd={true}
+                                >
                                     {
                                         new Date(props.todoList[id].postedAt)
                                             .toString()
                                             .split('GMT')[0]
                                     }
-                                </div>
+                                </Typography>
                             </div>
                         </div>
                     </li>
                 ))}
             </ul>
             <TableFooter
-                data={todoListKeys}
+                page={props.page}
+                data={props?.filteredList}
                 range={5}
                 setPage={props.setPage}
             />

@@ -4,6 +4,7 @@ import Input from '../Input/index'
 import Button from '../Button/index'
 import { TodoList } from '../../redux/todo/todoSlice.type'
 import styles from './Search.module.css'
+import Typography from '../Typography'
 
 interface ISearch {
     id: string
@@ -67,7 +68,7 @@ export default function Search(props: ISearch) {
     }
     return (
         <div className={styles.Search}>
-            <h2>Connect Tasks</h2>
+            <Typography as="h2">Connect Tasks</Typography>
             <Input
                 classname={styles.SearchInput}
                 text={search.task}
@@ -77,13 +78,13 @@ export default function Search(props: ISearch) {
             {search.task !== undefined && handleSearch()}
             {isItemSelected && (
                 <div className={styles.RefList}>
-                    <div>Click to Connect</div>
+                    <Typography as="h2">Click to Connect</Typography>
                     <Button
                         type="button"
                         color="secondary"
                         onclick={handleConnect}
                     >
-                        {search.task}
+                        <Typography>{search.task}</Typography>
                     </Button>
                 </div>
             )}

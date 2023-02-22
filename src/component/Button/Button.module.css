@@ -6,7 +6,6 @@
     cursor: pointer;
     font-size: 20px;
     padding: 0.5rem 1rem;
-    height: 2.5rem;
     height: 100%;
     width: 100%;
 }
@@ -16,4 +15,8 @@
 }
 .secondary {
     background-color: var(--bg-gray);
+}
+.selected {
+    background-color: var(--secondary);
+    border-radius: 20px;
 }

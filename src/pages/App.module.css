@@ -5,3 +5,14 @@
     align-items: center;
     width: 100%;
 }
+.Controls {
+    display: flex;
+    flex-direction: row;
+    align-self: end;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.ControlButton:hover {
+    background-color: var(--secondary);
+    border-radius: 20px;
+}

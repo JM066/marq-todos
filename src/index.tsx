@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import Modal from 'react-modal'
 import Layout from './component/Layout/index'
 import App from './pages/App'
 import { store } from './redux/store'
@@ -13,6 +14,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+Modal.setAppElement('#root')
 root.render(
     <React.StrictMode>
         <Provider store={store}>

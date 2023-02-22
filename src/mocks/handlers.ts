@@ -29,7 +29,6 @@ function filterAction(
 export const handlers = [
     rest.get('/test', (req, res, ctx) => {
         const result = todoProvider.getTodos()
-        console.error('get result', result)
         return res(
             ctx.status(200),
             ctx.json({

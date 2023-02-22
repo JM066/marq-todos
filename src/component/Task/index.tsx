@@ -1,11 +1,9 @@
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
-
 import type { RootState } from '../../redux/store'
 import { getTodoItemById, getTodoList } from '../../redux/todo/todoSlice'
 import UnFinished from './UnFinished'
 import Finished from './Finished'
-
 import styles from './Task.module.css'
 export interface ITask {
     id: string
@@ -20,9 +18,6 @@ export default function Task(props: ITask) {
 
     return (
         <div className={styles.TaskContainer}>
-            {/* <p className={styles.Caption}>
-                {new Date(todo.postedAt).toString().split('GMT')[0]}
-            </p> */}
             <Component
                 state={todo.done}
                 id={props.id}

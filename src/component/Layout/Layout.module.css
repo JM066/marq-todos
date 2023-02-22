@@ -6,23 +6,18 @@
     padding: 5rem 5rem;
 }
 
-@media screen and (min-width: 480px) {
+@media screen and (max-width: 480px) {
     .Layout {
-        padding: 1rem;
+        padding: 1rem 1rem;
     }
 }
-@media screen and (min-width: 768px) {
+@media screen and (max-width: 768px) {
     .Layout {
-        padding: 1rem;
+        padding: 2rem 1rem;
     }
 }
-@media screen and (min-width: 1024px) {
+@media screen and (max-width: 1024px) {
     .Layout {
-        padding: 1rem;
-    }
-}
-@media screen and (min-width: 1200px) {
-    .Layout {
-        padding: 3rem;
+        padding: 5rem 1rem;
     }
 }

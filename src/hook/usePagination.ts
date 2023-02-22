@@ -5,7 +5,7 @@ export default function usePagination(
     selectedPage: number,
     todoListKeys: string[]
 ) {
-    const [data, setData] = useState<string[]>()
+    const [data, setData] = useState<string[]>(todoListKeys)
 
     useEffect(() => {
         setLocalStorage(LOCAL_STORAGE_KEY.CURRENT_PAGE, selectedPage)
@@ -15,9 +15,7 @@ export default function usePagination(
                 range * selectedPage
             )
         )
-        console.error('useTodo', todoListKeys)
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selectedPage, range])
+    }, [selectedPage, range, todoListKeys])
 
     return { data }
 }

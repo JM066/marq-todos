@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
-import { addItem, addIds } from '../redux/todo/todoSlice'
+import { addItem } from '../redux/todo/todoSlice'
 import callApi from '../utils/http.utils'
 
 type TodoData = {
@@ -19,7 +19,6 @@ export default function useGetTodos(): TodoData {
                 cancel.current = true
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const getTodos = async () => {

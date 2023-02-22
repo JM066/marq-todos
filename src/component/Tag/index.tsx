@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react'
 import useUpdateTodo from '../../hook/useUpdateTodo'
 import { TodoList } from '../../redux/todo/todoSlice.type'
+import Typography from '../Typography'
 import styles from './Tag.module.css'
 
 interface ITag {
@@ -22,8 +23,8 @@ export default function Tag(props: PropsWithChildren<ITag>) {
         props.reload()
     }
     return (
-        <div className={styles.Tag} onClick={handleDisconnect}>
+        <Typography classname={styles.Tag} onclick={handleDisconnect}>
             {props.children}
-        </div>
+        </Typography>
     )
 }

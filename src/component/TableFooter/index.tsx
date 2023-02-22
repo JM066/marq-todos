@@ -1,9 +1,9 @@
-import React from 'react'
 import Button from '../Button/index'
 import styles from './TableFooter.module.css'
 
 interface ITableFooter {
     data: string[]
+    page: number
     range: number
     setPage: React.Dispatch<React.SetStateAction<number>>
 }
@@ -14,10 +14,11 @@ export default function TableFooter(props: ITableFooter) {
                 {new Array(Math.ceil(props.data.length / props.range))
                     .fill(0)
                     .map((_a, i) => (
-                        <div>
+                        <div key={i}>
                             <Button
                                 type="button"
                                 key={i}
+                                selected={props.page === i + 1}
                                 classname={styles.PageNum}
                                 onclick={() => props.setPage(i + 1)}
                             >

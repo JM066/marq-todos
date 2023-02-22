@@ -4,6 +4,7 @@ import Button from '../Button/'
 import Input from '../Input/index'
 import { TodoList } from '../../redux/todo/todoSlice.type'
 import styles from './Form.module.css'
+import Typography from '../Typography'
 
 interface IForm {
     list: TodoList
@@ -25,7 +26,7 @@ export default function Form(props: PropsWithChildren<IForm>) {
             <Input text={text} onchange={setText} />
             <div className={styles.ButtonContainer}>
                 <Button color="secondary" type="submit">
-                    Add Todo
+                    <Typography as="h2">Add Todo</Typography>
                 </Button>
             </div>
         </form>

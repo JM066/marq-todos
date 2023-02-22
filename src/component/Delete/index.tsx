@@ -1,6 +1,7 @@
 import useRemoveTodo from '../../hook/useRemoveTodo'
-import Button from '../Button/index'
 import { TodoList } from '../../redux/todo/todoSlice.type'
+import Button from '../Button/index'
+import Typography from '../Typography'
 
 interface IDelete {
     id: string
@@ -15,7 +16,7 @@ export default function Delete(props: IDelete) {
     }
     return (
         <Button type="button" color="primary" onclick={handleDelete}>
-            Delete
+            <Typography as="p">Delete</Typography>
         </Button>
     )
 }

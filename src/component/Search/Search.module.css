@@ -3,9 +3,7 @@
     flex-direction: column;
     gap: 20px;
 }
-.SearchInput {
-    /* margin-bottom: 10px; */
-}
+
 .RefList {
     display: flex;
     flex-direction: column;

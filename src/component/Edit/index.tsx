@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import useEditTodo from '../../hook/useEditTodo'
+import { TodoList } from '../../redux/todo/todoSlice.type'
 import Input from '../Input/index'
 import Button from '../Button/index'
-import { TodoList } from '../../redux/todo/todoSlice.type'
+import Typography from '../Typography'
 import styles from './Edit.module.css'
-
 interface IEdit {
     id: string
     list: TodoList
@@ -23,11 +23,11 @@ export default function Edit(props: IEdit) {
     return (
         <>
             <form onSubmit={handleSubmit} className={styles.Edit}>
-                <h2> Edit Data</h2>
+                <Typography as="h2"> Edit Data</Typography>
                 <Input text={title} onchange={setTitle} />
 
                 <Button type="submit" color="secondary">
-                    Button
+                    <Typography as="h2">Save</Typography>
                 </Button>
             </form>
         </>
