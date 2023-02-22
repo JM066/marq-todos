@@ -5,5 +5,9 @@
     align-items: center;
     width: 100%;
     gap: 10px;
-    height: 120px;
+    height: 130px;
+}
+.ButtonContainer {
+    min-width: 8rem;
+    height: 3.5rem;
 }

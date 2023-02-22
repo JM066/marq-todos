@@ -20,6 +20,9 @@ export default function Task(props: ITask) {
 
     return (
         <div className={styles.TaskContainer}>
+            {/* <p className={styles.Caption}>
+                {new Date(todo.postedAt).toString().split('GMT')[0]}
+            </p> */}
             <Component
                 state={todo.done}
                 id={props.id}
@@ -31,7 +34,7 @@ export default function Task(props: ITask) {
                         [styles.done]: todo.done,
                     })}
                 >
-                    {todo.item} Status: {todo.done ? 'Done' : 'Not Done'}
+                    {todo.item}
                 </span>
             </Component>
         </div>

@@ -8,21 +8,39 @@
     flex-direction: column;
     gap: 10px;
 }
-.TodoItem {
+.TodoContainer {
+    width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
     min-height: 3rem;
     padding: 10px 20px;
     border-radius: var(--round);
     background-color: var(--bg-gray);
+}
+.TodoItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 .TodoTitle {
     width: 100%;
 }
 .ActionContainer {
     display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+    justify-content: space-between;
+}
+.Actions {
+    display: flex;
     flex-direction: row;
     gap: 10px;
+}
+
+.Caption {
+    display: flex;
+    align-self: end;
+    color: #adadaa;
 }

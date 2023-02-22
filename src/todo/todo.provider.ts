@@ -6,6 +6,7 @@ import {
     concatId,
     removeEntities,
     removeRefId,
+    removeRefIds,
 } from '../utils/todo.utils'
 import getLocalStorage, {
     setLocalStorage,
@@ -19,19 +20,15 @@ function generateUid() {
 function updateItem(updatedList: TodoList) {
     setLocalStorage(LOCAL_STORAGE_KEY.TODOLIST, updatedList)
 }
-function createTime() {
-    return new Date()
-}
 const todoProvider: ITodoProvider = {
     addTodo: (todoList: TodoList, item: string) => {
         const id = generateUid()
         const data = {
             [id]: {
                 item: item,
-                postedAt: `message(${Date.now()})`,
+                postedAt: Date.now(),
                 done: false,
                 connection: [],
-                time: createTime(),
             },
         }
 
@@ -48,25 +45,26 @@ const todoProvider: ITodoProvider = {
     editTodo: (list: TodoList, id, title) => {
         let state = _.cloneDeep(list)
         state[id].item = title
+        state[id].postedAt = Date.now()
         updateItem(state)
     },
 
     removeTodo: (todoList: TodoList, item: string) => {
         let state = _.cloneDeep(todoList)
         const connectedItemList = state[item].connection
-        const rest = removeEntities(state, item)
+        let rest = removeEntities(state, item)
         if (connectedItemList.length > 0) {
-            state = removeRefId(rest, connectedItemList, item)
+            rest = removeRefIds(rest, connectedItemList, item)
         }
-        updateItem(state)
-        return state
+        updateItem(rest)
+        return rest
     },
     addConnection: (todoList: TodoList, id: string, refItemId: string) => {
         const state = _.cloneDeep(todoList)
         const found = state[refItemId].connection.find((task) => task === id)
         if (found) {
             window.alert(
-                `${state[refItemId].item} is already linked to  ${state[id].item}`
+                `${state[refItemId].item} is already linked to ${state[id].item}`
             )
         } else {
             state[id].connection = concatId<string>(
@@ -78,7 +76,6 @@ const todoProvider: ITodoProvider = {
         return state
     },
     completeTodo: (todoList: TodoList, item: string) => {
-        console.error('how many fire?')
         let state = _.cloneDeep(todoList)
         if (state[item].connection.length > 0) {
             const doneState = state[item].connection.filter((id: string) => {
@@ -103,12 +100,7 @@ const todoProvider: ITodoProvider = {
     },
     removeConnection: (todoList: TodoList, id: string, refItemId: string) => {
         const state = _.cloneDeep(todoList)
-        state[id].connection = state[id].connection.filter(
-            (item) => item !== refItemId
-        )
-        state[id].connection = state[refItemId].connection.filter(
-            (item) => item !== id
-        )
+        state[id].connection = removeRefId(state[id]?.connection, refItemId)
         updateItem(state)
         return state
     },

@@ -4,6 +4,7 @@ import { TodoEntities } from './todoSlice.type'
 
 const initialState: TodoEntities = {
     todoEntities: {},
+    todoIds: [],
 }
 
 export const todoSlice = createSlice({
@@ -13,14 +14,26 @@ export const todoSlice = createSlice({
         addItem: (state, { payload }) => {
             state.todoEntities = payload
         },
+        addIds: (state, { payload }) => {
+            state.todoIds = payload
+        },
     },
 })
 
-export const { addItem } = todoSlice.actions
+export const { addItem, addIds } = todoSlice.actions
 
 export const getTodolistKeys = (state: RootState) =>
     Object.keys(state.todo.todoEntities)
+export const getCompletedTodoIds = (state: RootState) =>
+    Object.keys(state.todo.todoEntities).filter(
+        (id) => state.todo.todoEntities[id].done
+    )
+export const getActiveTodoIds = (state: RootState) =>
+    Object.keys(state.todo.todoEntities).filter(
+        (id) => !state.todo.todoEntities[id].done
+    )
 export const getTodoItemById = (state: RootState, id: string) =>
     state.todo.todoEntities[id]
 export const getTodoList = (state: RootState) => state.todo.todoEntities
+
 export default todoSlice.reducer

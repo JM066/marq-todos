@@ -3,9 +3,10 @@ export interface TodoList {
         item: string
         done: boolean
         connection: string[]
-        time: Date
+        postedAt: number
     }
 }
 export interface TodoEntities {
     todoEntities: TodoList
+    todoIds: string[]
 }

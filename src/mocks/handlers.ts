@@ -51,21 +51,6 @@ export const handlers = [
     rest.put('/test', async (req, res, ctx) => {
         const { action, list, id, refId, title } = await req.json()
         filterAction(action, list, id, refId, title)
-        // if (action === 'connect') {
-        //     todoProvider.addConnection(list, id, refId)
-        // }
-        // if (action === 'complete') {
-        //     console.error('action compplete?', action)
-        //     todoProvider.completeTodo(list, id)
-        // }
-        // if (action === 'undoComplete') {
-        //     console.error('action undo compplete?', action)
-        //     todoProvider.undoCompleteTodo(list, id)
-        // }
-        // if (action === 'disconnect') {
-        //     todoProvider.removeConnection(list, id, refId)
-        // }
-
         return res(
             ctx.status(200),
             ctx.json({

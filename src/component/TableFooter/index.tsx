@@ -14,14 +14,16 @@ export default function TableFooter(props: ITableFooter) {
                 {new Array(Math.ceil(props.data.length / props.range))
                     .fill(0)
                     .map((_a, i) => (
-                        <Button
-                            type="button"
-                            key={i}
-                            classname={styles.PageNum}
-                            onclick={() => props.setPage(i + 1)}
-                        >
-                            {i + 1}
-                        </Button>
+                        <div>
+                            <Button
+                                type="button"
+                                key={i}
+                                classname={styles.PageNum}
+                                onclick={() => props.setPage(i + 1)}
+                            >
+                                {i + 1}
+                            </Button>
+                        </div>
                     ))}
             </div>
         </div>
