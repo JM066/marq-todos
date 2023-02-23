@@ -11,22 +11,25 @@ export interface ITask {
 }
 export default function Task(props: ITask) {
     const todoList = useSelector((state: RootState) => getTodoList(state))
-    const Component = todoList[props.id].done ? Finished : UnFinished
+    const todo = useSelector((state: RootState) =>
+        getTodoItemById(state, props?.id)
+    )
+    const Component = todo.done ? Finished : UnFinished
 
     return (
         <div className={styles.TaskContainer}>
             <Component
-                state={todoList[props.id].done}
+                state={todo.done}
                 id={props.id}
                 list={todoList}
                 reload={props.reload}
             >
                 <span
                     className={classNames(styles.Task, {
-                        [styles.done]: todoList[props.id].done,
+                        [styles.done]: todo.done,
                     })}
                 >
-                    {todoList[props.id].item}
+                    {todo.item}
                 </span>
             </Component>
         </div>

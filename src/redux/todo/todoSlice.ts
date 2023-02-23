@@ -23,15 +23,15 @@ export const todoSlice = createSlice({
 export const { addItem, addIds } = todoSlice.actions
 
 export const getTodolistKeys = (state: RootState) =>
-    Object.keys(state.todo.todoEntities)
+    Object.keys(state.todo.todoEntities).reverse()
 export const getCompletedTodoIds = (state: RootState) =>
-    Object.keys(state.todo.todoEntities).filter(
-        (id) => state.todo.todoEntities[id].done
-    )
+    Object.keys(state.todo.todoEntities)
+        .filter((id) => state.todo.todoEntities[id].done)
+        .reverse()
 export const getActiveTodoIds = (state: RootState) =>
-    Object.keys(state.todo.todoEntities).filter(
-        (id) => !state.todo.todoEntities[id].done
-    )
+    Object.keys(state.todo.todoEntities)
+        .filter((id) => !state.todo.todoEntities[id].done)
+        .reverse()
 export const getTodoItemById = (state: RootState, id: string) =>
     state.todo.todoEntities[id]
 export const getTodoList = (state: RootState) => state.todo.todoEntities
