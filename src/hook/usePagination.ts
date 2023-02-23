@@ -10,10 +10,9 @@ export default function usePagination(
     useEffect(() => {
         setLocalStorage(LOCAL_STORAGE_KEY.CURRENT_PAGE, selectedPage)
         setData(
-            todoListKeys?.slice(
-                range * (selectedPage - 1),
-                range * selectedPage
-            )
+            [...todoListKeys]
+                .reverse()
+                .slice(range * (selectedPage - 1), range * selectedPage)
         )
     }, [selectedPage, range, todoListKeys])
 

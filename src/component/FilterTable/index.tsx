@@ -31,12 +31,8 @@ export default function FilterTable(props: IFilterTable) {
     const todoListKeys = useSelector((state: RootState) =>
         getTodolistKeys(state)
     )
+    const { data } = usePagination(props.range, props.page, props.filteredList)
 
-    const { data } = usePagination(
-        props.range,
-        props.page,
-        props.filteredList.reverse()
-    )
     return (
         <div className={styles.TodoListWrapper}>
             <ul className={styles.TodoList}>
