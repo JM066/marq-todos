@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { getTodolistKeys } from '../../redux/todo/todoSlice'
 import { TodoList } from '../../redux/todo/todoSlice.type'
@@ -13,12 +14,6 @@ import Edit from '../Edit/index'
 import Typography from '../Typography'
 import styles from './FilterTable.module.css'
 
-export enum FilterType {
-    ALL = 'all',
-    COMPLETE = 'complete',
-    ACTIVE = 'active',
-}
-
 interface IFilterTable {
     page: number
     range: number
@@ -32,7 +27,10 @@ export default function FilterTable(props: IFilterTable) {
         getTodolistKeys(state)
     )
     const { data } = usePagination(props.range, props.page, props.filteredList)
-
+    useEffect(() => {
+        if ((props.page - 1) * props.range >= data.length)
+            props.setPage(props.page - 1)
+    }, [])
     return (
         <div className={styles.TodoListWrapper}>
             <ul className={styles.TodoList}>

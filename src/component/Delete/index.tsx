@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react'
 import useRemoveTodo from '../../hook/useRemoveTodo'
 import { TodoList } from '../../redux/todo/todoSlice.type'
 import Button from '../Button/index'
@@ -10,6 +11,7 @@ interface IDelete {
 }
 export default function Delete(props: IDelete) {
     const { removeTodo } = useRemoveTodo<TodoList>(props.list, props.id)
+
     const handleDelete = async () => {
         await removeTodo()
         props.reload()
