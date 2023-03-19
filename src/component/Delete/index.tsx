@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react'
 import useRemoveTodo from '../../hook/useRemoveTodo'
 import { TodoList } from '../../redux/todo/todoSlice.type'
 import Button from '../Button/index'
